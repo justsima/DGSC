@@ -4,13 +4,15 @@ import LogoFull from "../assets/images/logofull.svg";
 import Tomoca from "../assets/images/Tomoca.PNG";
 import TomocaHQ from "../assets/images/HQtomoca.PNG";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function SignInSide() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   //   const { enqueueSnackbar } = useSnackbar();
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
+    navigate("/dashboard");
     // axios
     //   .post("/login", {
     //     username: username,
@@ -30,10 +32,10 @@ export default function SignInSide() {
   };
   return (
     <>
-      <div className="h-[100vh] w-full grid place-items-center relative  bg-no-repeat bg-cover bg-center bg   ">
+      <div className="h-[100vh] w-full grid place-items-center relative  bg-no-repeat bg-cover bg-center   ">
         {/* <img src={TomocaHQ} alt="" /> */}
-        <div className=" w-full h-full bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg grid place-items-center  ">
-          <Card className="w-[80rem] pr-10 mt-10 rounded-3xl">
+        <div className=" w-full h-full bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl drop-shadow-lg grid place-items-center  ">
+          <Card className="xl:w-[80rem] md:w-[45rem]  lg:w-[55rem]  md:mt-[-10rem] lg:mt-[-30rem] pr-10 xl:mt-10 rounded-5xl">
             <Grid
               container
               rowSpacing={1}
@@ -41,17 +43,17 @@ export default function SignInSide() {
             >
               <Grid item xs={6}>
                 <img
-                  className="w-full grid place-items-center "
+                  className="xl:w-full w-[20rem] grid place-items-center "
                   src={Tomoca}
                   alt="Tomoca Images"
                 />
               </Grid>
-              <Grid className="grid place-items-center h-[60vh] " item xs={6}>
+              <Grid className="grid place-items-center xl:h-[60vh] md:h-[50vh] lg:h-[40vh] " item xs={6}>
                 <img className="w-20 mt-5 " src={LogoFull}></img>
                 <h2 className="text-2xl text-[#FF7A11] font-bold mt-10  ">
                   ADMIN LOGIN
                 </h2>
-                <p className="w-[25rem] text-[#C2C2C1] text-center">
+                <p className="xl:w-[25rem] text-[#C2C2C1] text-center">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
                 </p>
                 <form>

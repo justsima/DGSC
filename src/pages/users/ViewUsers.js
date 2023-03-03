@@ -1,27 +1,27 @@
 import * as React from "react";
-import Table from "../components/Table"
-import { DashboardLayout } from "../components/dashboard-layout";
+import Table from "../../components/Table";
+import { DashboardLayout } from "../../components/dashboard-layout";
 import axios from "axios";
-export default function ViewInventory() {
+export default function ViewUsers() {
   const columns = [
-    { title: "Inventory Name", field: "name" },
-    { title: "Inventory Description", field: "description" },
+    { title: "User Full Name", field: "name" },
+    { title: "User Name", field: "username" },
     {
-      title: "Inventory Price",
-      field: "price",
+      title: "User Email",
+      field: "email",
     },
 
-    { title: "Inventory Stock ", field: "description" },
+    { title: "User Phone Number ", field: "phonenumber" },
     {
-      title: "Inventory date",
-      field: "createdAt",
+      title: "Membership Type",
+      field: "membershipType",
     },
-    { title: "Inventory Image", field: "image" },
+    // { title: "User Sex", field: "sex" },
   ];
   const [data, setData] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/Inventory/getAll")
+      .get("http://localhost:4000/User/getAll")
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -35,7 +35,7 @@ export default function ViewInventory() {
       <DashboardLayout>
         <div className="w-full">
           <Table
-            title="All Inventory List"
+            title="All Users List"
             data={data}
             columns={columns}
             editable={{
@@ -83,7 +83,6 @@ export default function ViewInventory() {
               placement: "bottom",
             }}
           ></Table>
-         
         </div>
       </DashboardLayout>
     </>

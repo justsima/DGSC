@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import Table from "../../components/Table";
+import * as React from "react";
+import Table from "../components/Table";
+import { DashboardLayout } from "../components/dashboard-layout";
 import axios from "axios";
-export default function ViewLocation() {
+export default function ViewMembership() {
   const columns = [
-    { title: "Location Name", field: "name" },
-    { title: "Location Address ", field: "address" },
+    { title: "Inventory Name", field: "name" },
+    { title: "Inventory Description", field: "description" },
     {
-      title: " Location Phone",
-      field: "phone",
+      title: "Inventory Price",
+      field: "price",
     },
 
-    { title: "Location Description ", field: "description" },
+    { title: "Inventory Stock ", field: "description" },
     {
-      title: "Location Longtiude",
-      field: "longitude",
+      title: "Inventory date",
+      field: "createdAt",
     },
-    { title: "Location Latiude", field: "latitude" },
-    { title: "Location Link", field: "link" },
+    { title: "Inventory Image", field: "image" },
   ];
   const [data, setData] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/Location/getAll")
+      .get("http://localhost:4000/Inventory/getAll")
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -36,7 +35,7 @@ export default function ViewLocation() {
       <DashboardLayout>
         <div className="w-full">
           <Table
-            title="All Location List"
+            title="All Inventory List"
             data={data}
             columns={columns}
             editable={{

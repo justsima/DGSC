@@ -10,7 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { DashboardLayout } from "../components/dashboard-layout";
+import { DashboardLayout } from "../../components/dashboard-layout";
 // import { useRouter } from "next/router";
 export default function AddInventory() {
   function handleClick() {

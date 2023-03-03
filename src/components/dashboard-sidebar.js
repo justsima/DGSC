@@ -16,6 +16,8 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import EditLocationIcon from "@mui/icons-material/EditLocation";
+import PaymentIcon from "@mui/icons-material/Payment";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Logo from "../assets/images/logowh.svg";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
@@ -28,6 +30,11 @@ const generalItems = [
     href: "/dashboard",
     icon: <DashboardIcon fontSize="small" />,
     title: "Dashboard",
+  },
+  {
+    href: "/Orderdetails",
+    icon: <QrCode2Icon fontSize="small" />,
+    title: "Scan Now",
   },
   {
     href: "/Orderdetails",
@@ -51,19 +58,24 @@ const menuList = [
     icon: <AddShoppingCartIcon />,
     href: "/ViewInventory",
   },
+];
+const order = [
   {
     href: "/Order",
     icon: <BookmarkBorderIcon />,
     title: "Orders",
   },
-
+  {
+    href: "/PaymentView",
+    icon: <PaymentIcon />,
+    title: "Payment History",
+  },
   {
     href: "/gift",
     icon: <CardGiftcardIcon />,
     title: "Gift",
   },
 ];
-
 const menuList2 = [
   {
     href: "/AddLocation",
@@ -79,13 +91,13 @@ const menuList2 = [
 const menuList3 = [
   {
     href: "/dashboard/Location",
-    icon: <AddLocationAltIcon />,
-    title: "Admin",
+    icon: <GroupAddIcon />,
+    title: "Add Users",
   },
   {
-    href: "/dashboard/LocationList",
-    icon: <EditLocationIcon />,
-    title: "Add User",
+    href: "/ViewUsers",
+    icon: <PeopleIcon />,
+    title: "View Users",
   },
 ];
 const menuList4 = [
@@ -112,14 +124,14 @@ const menuList4 = [
 ];
 const RegisterUser = [
   {
-    href: "/dashboard/registeruser",
-    icon: <AddIcon fontSize="small" />,
-    title: "Register User",
+    href: "/dashboard/Location",
+    icon: <AdminPanelSettingsIcon />,
+    title: "Admin",
   },
   {
     href: "/dashboard/registerguest",
     icon: <AddIcon fontSize="small" />,
-    title: "Register Guest",
+    title: "Add Admin",
   },
 ];
 
@@ -204,7 +216,7 @@ export const DashboardSidebar = (props) => {
         <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
 
         <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">GENERAL</Typography>
+          {/* <Typography variant="menuTitle">GENERAL</Typography> */}
           {generalItems.map((item, index) => (
             <NavItem
               key={index}
@@ -216,7 +228,7 @@ export const DashboardSidebar = (props) => {
         </Box>
         <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
         <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">Main List</Typography>
+          <Typography variant="menuTitle">Inventory</Typography>
           {menuList.map((item, index) => (
             <NavItem
               key={index}
@@ -225,6 +237,19 @@ export const DashboardSidebar = (props) => {
               title={item.title}
             />
           ))}
+        </Box>
+        <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography variant="menuTitle">Order</Typography>
+          {order.map((item, index) => (
+            <NavItem
+              key={index}
+              icon={item.icon}
+              href={item.href}
+              title={item.title}
+            />
+          ))}
+        </Box>
         </Box>
         <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
         <Box sx={{ flexGrow: 1 }}>
@@ -238,7 +263,7 @@ export const DashboardSidebar = (props) => {
             />
           ))}
         </Box>
-      </Box>
+     
       <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="menuTitle">Membership</Typography>
@@ -255,6 +280,18 @@ export const DashboardSidebar = (props) => {
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="menuTitle">Users</Typography>
         {menuList3.map((item, index) => (
+          <NavItem
+            key={index}
+            icon={item.icon}
+            href={item.href}
+            title={item.title}
+          />
+        ))}
+      </Box>
+      <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
+      <Box sx={{ flexGrow: 1 }}>
+        <Typography variant="menuTitle">Admin</Typography>
+        {RegisterUser.map((item, index) => (
           <NavItem
             key={index}
             icon={item.icon}

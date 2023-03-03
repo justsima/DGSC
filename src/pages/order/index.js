@@ -29,7 +29,7 @@ const OrderView = () => {
 
   useEffect(() => {
     axios
-      .get("https://d601-196-188-123-14.in.ngrok.io/Order/getAll")
+      .get("http://localhost:4000/Order/getAll")
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -44,9 +44,7 @@ const OrderView = () => {
     history.go(0);
     console.log(rowData);
     axios
-      .get(
-        `https://d601-196-188-123-14.in.ngrok.io/Order/complete/${rowData.id}`
-      )
+      .get(`http://localhost:4000/Order/complete/${rowData.id}`)
       .then((res) => {
         navigate(`/Order`);
       })
@@ -68,20 +66,20 @@ const OrderView = () => {
                 <>
                   <div>
                     <Table
-                      title="Order Details"
+                      title="Ordered Item Details"
                       columns={[
-                        { title: "Item Name", field: "inventory.name" },
+                        { title: "Name", field: "inventory.name" },
                         {
-                          title: "Item Description",
+                          title: "Description",
                           field: "inventory.description",
                         },
                         {
-                          title: "Item Quantity",
+                          title: "Quantity",
                           field: "quantity",
                           type: "numeric",
                         },
                         {
-                          title: "Item Price",
+                          title: "Price",
                           field: "inventory.price",
                         },
                         {
@@ -95,7 +93,7 @@ const OrderView = () => {
                       }}
                       actions={[
                         {
-                          tooltip: "Remove All Selected Users",
+                          tooltip: "Selected Items",
                           icon: "delete",
                           onClick: (evt, data) =>
                             alert(
@@ -103,6 +101,30 @@ const OrderView = () => {
                             ),
                         },
                       ]}
+                      editable={{
+                        onRowUpdate: (newData, oldData) =>
+                          new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                              const dataUpdate = [...data];
+                              const index = oldData.tableData.id;
+                              dataUpdate[index] = newData;
+                              setData([...dataUpdate]);
+
+                              resolve();
+                            }, 1000);
+                          }),
+                        onRowDelete: (oldData) =>
+                          new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                              const dataDelete = [...data];
+                              const index = oldData.tableData.id;
+                              dataDelete.splice(index, 1);
+                              setData([...dataDelete]);
+
+                              resolve();
+                            }, 1000);
+                          }),
+                      }}
                     />
                   </div>
 
@@ -133,17 +155,17 @@ const OrderView = () => {
                     resolve();
                   }, 1000);
                 }),
-              onRowUpdate: (newData, oldData) =>
-                new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                    const dataUpdate = [...data];
-                    const index = oldData.tableData.id;
-                    dataUpdate[index] = newData;
-                    setData([...dataUpdate]);
+              //   onRowUpdate: (newData, oldData) =>
+              //     new Promise((resolve, reject) => {
+              //       setTimeout(() => {
+              //         const dataUpdate = [...data];
+              //         const index = oldData.tableData.id;
+              //         dataUpdate[index] = newData;
+              //         setData([...dataUpdate]);
 
-                    resolve();
-                  }, 1000);
-                }),
+              //         resolve();
+              //       }, 1000);
+              //     }),
               onRowDelete: (oldData) =>
                 new Promise((resolve, reject) => {
                   setTimeout(() => {
