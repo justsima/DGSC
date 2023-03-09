@@ -90,11 +90,6 @@ const menuList2 = [
 ];
 const menuList3 = [
   {
-    href: "/dashboard/Location",
-    icon: <GroupAddIcon />,
-    title: "Add Users",
-  },
-  {
     href: "/ViewUsers",
     icon: <PeopleIcon />,
     title: "View Users",
@@ -250,20 +245,20 @@ export const DashboardSidebar = (props) => {
             />
           ))}
         </Box>
-        </Box>
-        <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
-        <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="menuTitle">Locations</Typography>
-          {menuList2.map((item, index) => (
-            <NavItem
-              key={index}
-              icon={item.icon}
-              href={item.href}
-              title={item.title}
-            />
-          ))}
-        </Box>
-     
+      </Box>
+      <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
+      <Box sx={{ flexGrow: 1 }}>
+        <Typography variant="menuTitle">Locations</Typography>
+        {menuList2.map((item, index) => (
+          <NavItem
+            key={index}
+            icon={item.icon}
+            href={item.href}
+            title={item.title}
+          />
+        ))}
+      </Box>
+
       <Divider sx={{ borderColor: "#E5E7EB", my: 2, opacity: ".2" }} />
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="menuTitle">Membership</Typography>

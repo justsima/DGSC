@@ -5,34 +5,35 @@ import Tomoca from "../assets/images/Tomoca.PNG";
 import TomocaHQ from "../assets/images/HQtomoca.PNG";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+// import { useSnackbar } from "notistack";
 export default function SignInSide() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  //   const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const handleLogin = (e) => {
+    console.log(username, password)
     e.preventDefault();
-    navigate("/dashboard");
-    // axios
-    //   .post("/login", {
-    //     username: username,
-    //     password: password,
-    //   })
-    //   .then(function (response: any) {
-    //     if (response.data.status === 200) {
-    //       enqueueSnackbar("Login Success", { variant: "success" });
-    //        navigate("/index");
-    //     }
-    //   })
-    //   .catch(function (error: Error) {
-    //     enqueueSnackbar("Login Failed", { variant: "error" });
-    //   });
-    // navigate("/index");
-    // enqueueSnackbar("Login Success", { variant: "success" });
+    axios
+      .post("http://localhost:4000/AdminAuth/login", {
+        userName: username, password: password })
+      .then(function (response) {
+        console.log(response.data);
+          // enqueueSnackbar("Login Success", { variant: "success" });
+          navigate("/dashboard");
+      })
+      .catch(function (error) {
+        console.log(error);
+        // enqueueSnackbar("Login Failed", { variant: "error" });
+      });
   };
   return (
     <>
-      <div className="h-[100vh] w-full grid place-items-center relative  bg-no-repeat bg-cover bg-center   ">
+      <div
+        className="h-[100vh] w-full grid place-items-center relative  bg-no-repeat bg-cover bg-center   "
+        style={{ background: `url(${TomocaHQ}})` }}
+      >
         {/* <img src={TomocaHQ} alt="" /> */}
         <div className=" w-full h-full bg-white bg-opacity-20 backdrop-blur-lg rounded-2xl drop-shadow-lg grid place-items-center  ">
           <Card className="xl:w-[80rem] md:w-[45rem]  lg:w-[55rem]  md:mt-[-10rem] lg:mt-[-30rem] pr-10 xl:mt-10 rounded-5xl">
@@ -48,7 +49,11 @@ export default function SignInSide() {
                   alt="Tomoca Images"
                 />
               </Grid>
-              <Grid className="grid place-items-center xl:h-[60vh] md:h-[50vh] lg:h-[40vh] " item xs={6}>
+              <Grid
+                className="grid place-items-center xl:h-[60vh] md:h-[50vh] lg:h-[40vh] "
+                item
+                xs={6}
+              >
                 <img className="w-20 mt-5 " src={LogoFull}></img>
                 <h2 className="text-2xl text-[#FF7A11] font-bold mt-10  ">
                   ADMIN LOGIN
@@ -75,14 +80,12 @@ export default function SignInSide() {
                     aria-label="Password"
                     name="Password"
                   />{" "}
-                  <Link href="/dashboard">
-                    <button
-                      onClick={(e) => handleLogin(e)}
-                      className="w-full p-2 mt-10 text-white bg-[#FF7A11]"
-                    >
-                      Login
-                    </button>{" "}
-                  </Link>
+                  <button
+                    onClick={(e) => handleLogin(e)}
+                    className="w-full p-2 mt-10 text-white bg-[#FF7A11]"
+                  >
+                    Login
+                  </button>{" "}
                 </form>
               </Grid>
             </Grid>
