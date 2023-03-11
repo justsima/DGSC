@@ -71,6 +71,11 @@ const order = [
     title: "Payment History",
   },
   {
+    href: "/PaymentList",
+    icon: <PaymentIcon />,
+    title: "Payment List",
+  },
+  {
     href: "/gift",
     icon: <CardGiftcardIcon />,
     title: "Gift",
