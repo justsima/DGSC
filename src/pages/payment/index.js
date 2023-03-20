@@ -31,7 +31,7 @@ const PaymentView = () => {
   }, []);
 
   const completeOrder = (rowData) => {
-    history.go(0);
+    navigate.go(0);
     console.log(rowData);
     axios
       .get(`http://localhost:4000/Order/complete/${rowData.id}`)
