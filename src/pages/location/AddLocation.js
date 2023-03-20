@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import { useForm } from "react-hook-form";
@@ -7,30 +7,75 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import { DashboardLayout } from "../../components/dashboard-layout";
-export default function AddLocation() {
-  function handleClick() {
-    console.log("Button clicked!");
-  }
-  const { register, handleSubmit, reset } = useForm();
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import FileUpload from "react-mui-fileuploader";
+import logo from "../../assets/images/logowh.svg";
 
-  const newLocation = (data) => {
-    // console.log(data);
-    const req = {
-      name: data.name,
-      address: data.address,
-      phone: data.phone,
-      description: data.description,
-      longitude: Number(data.longtiude),
-      latitude: Number(data.latitude),
-      link: data.link,
-    };
-    axios
-      .post("http://localhost:4000/Location/create", req)
+export default function AddLocation() {
+  // const url = process.env.REACT_APP_URL;
+  const url = "http://localhost:4000";
+  const { register, handleSubmit, reset } = useForm();
+  const [filesToUpload, setFilesToUpload] = useState([]);
+
+  const handleFilesChange = (files) => {
+    setFilesToUpload([...files]);
+  };
+  const handleFileUploadError = () => {
+    alert("Error");
+  };
+  const handleClick = () => {
+    console.log("clicked");
+  };
+  const newLocation = async (data) => {
+    let formData = new FormData();
+    filesToUpload.forEach((file) => formData.append("image", file));
+    formData.append("name", data.name);
+    formData.append("address", data.address);
+    formData.append("phone", data.phone);
+    formData.append("description", data.description);
+    formData.append("longitude", data.longtiude);
+    formData.append("latitude", data.latitude);
+    formData.append("link", data.link);
+    const res = await fetch(url + "/Location/create", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
       .then((res) => {
         console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
+        if (res.status == true) {
+          console.log(data);
+          data.name = '';
+          data.address = '';
+          data.phone = '';
+          data.description = '';
+          data.longtiude = '';
+          data.latitude = '';
+          data.link = '';
+
+          toast.success("Location Created", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+        } else if (res.status == false) {
+          toast.error("Error", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+        }
       });
   };
   return (
@@ -42,6 +87,57 @@ export default function AddLocation() {
               This is a form to add more Location{" "}
             </Typography>
             <form onSubmit={handleSubmit(newLocation)}>
+              <Grid container spacing={3} className="p-5">
+                <Grid item xs={12} sm={6}>
+                  <FileUpload
+                    getBase64={false}
+                    multiFile={false}
+                    disabled={false}
+                    title="Location Image"
+                    header="[Drag to drop]"
+                    leftLabel="or"
+                    rightLabel=""
+                    buttonLabel="click here"
+                    buttonRemoveLabel="Remove all"
+                    maxFileSize={10}
+                    maxUploadFiles={1}
+                    maxFilesContainerHeight={357}
+                    acceptedType={"image/*"}
+                    errorSizeMessage={
+                      "fill it or remove it to use the default error message"
+                    }
+                    allowedExtensions={[
+                      "jpg",
+                      "jpeg",
+                      "png",
+                      "webp",
+                      "gif",
+                      "svg",
+                    ]}
+                    onFilesChange={handleFilesChange}
+                    onError={handleFileUploadError}
+                    imageSrc={logo}
+                    BannerProps={{ elevation: 0, variant: "outlined" }}
+                    showPlaceholderImage={true}
+                    PlaceholderGridProps={{ md: 4, lg: 2 }}
+                    LabelsGridProps={{ md: 8 }}
+                    onContextReady={(context) => {
+                      // access to component context here
+                    }}
+                    ContainerProps={{
+                      elevation: 0,
+                      variant: "outlined",
+                      sx: { p: 1 },
+                    }}
+                    PlaceholderImageDimension={{
+                      xs: { width: 128, height: 128 },
+                      sm: { width: 128, height: 128 },
+                      md: { width: 164, height: 164 },
+                      lg: { width: 200, height: 200 },
+                    }}
+                  />
+                </Grid>
+              </Grid>
               <Grid container spacing={4} className="p-5">
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -53,6 +149,7 @@ export default function AddLocation() {
                     {...register("name")}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -114,8 +211,9 @@ export default function AddLocation() {
                 <Grid item lg={6} sm={12}></Grid>
                 <Grid item>
                   <button
-                    className="w-60 p-2 mt-10 text-white bg-[#FF7A11] rounded-lg"
+                    type="submit"
                     onClick={handleClick}
+                    className="w-60 p-2 mt-10 text-white bg-[#FF7A11] rounded-lg"
                   >
                     Submit
                   </button>
@@ -124,6 +222,7 @@ export default function AddLocation() {
             </form>
           </Card>
         </div>
+        <ToastContainer />
       </DashboardLayout>
     </>
   );
