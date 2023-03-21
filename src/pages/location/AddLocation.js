@@ -31,11 +31,13 @@ export default function AddLocation() {
     let formData = new FormData();
     filesToUpload.forEach((file) => formData.append("image", file));
     formData.append("name", data.name);
+    formData.append("shopNumber", data.shopNumber);
+    formData.append("locationName", data.locationName);
     formData.append("address", data.address);
     formData.append("phone", data.phone);
     formData.append("description", data.description);
-    formData.append("longitude", data.longtiude);
-    formData.append("latitude", data.latitude);
+    // formData.append("longitude", data.longtiude);
+    // formData.append("latitude", data.latitude);
     formData.append("link", data.link);
     const res = await fetch(url + "/Location/create", {
       method: "POST",
@@ -43,17 +45,8 @@ export default function AddLocation() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         if (res.status == true) {
-          console.log(data);
-          data.name = '';
-          data.address = '';
-          data.phone = '';
-          data.description = '';
-          data.longtiude = '';
-          data.latitude = '';
-          data.link = '';
-
+          window.location.reload();
           toast.success("Location Created", {
             position: "top-right",
             autoClose: 5000,
@@ -143,10 +136,31 @@ export default function AddLocation() {
                   <TextField
                     required
                     name="name"
-                    label="Location Name"
+                    label="Shop Name"
                     type="text"
                     fullWidth
                     {...register("name")}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    name="shopNumber"
+                    label="Shop Number"
+                    type="number"
+                    fullWidth
+                    {...register("shopNumber")}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    name="locationName"
+                    label="Location Name"
+                    type="text"
+                    fullWidth
+                    {...register("locationName")}
                   />
                 </Grid>
 
@@ -154,7 +168,7 @@ export default function AddLocation() {
                   <TextField
                     required
                     name="address"
-                    label="Location Address"
+                    label="Address"
                     type="text"
                     fullWidth
                     {...register("address")}
@@ -164,7 +178,7 @@ export default function AddLocation() {
                   <TextField
                     required
                     name="phone"
-                    label="Location Phone"
+                    label="Phone Number"
                     type="text"
                     fullWidth
                     {...register("phone")}
@@ -174,13 +188,13 @@ export default function AddLocation() {
                   <TextField
                     required
                     name="description"
-                    label="Location Description"
+                    label="Description"
                     type="text"
                     fullWidth
                     {...register("description")}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                {/* <Grid item xs={12} sm={6}>
                   <TextField
                     name="longtiude"
                     label="Location Long"
@@ -197,12 +211,12 @@ export default function AddLocation() {
                     fullWidth
                     {...register("latitude")}
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item lg={6} sm={12}>
                   <TextField
                     required
                     name="link"
-                    label="Location Link"
+                    label="Link"
                     type="text"
                     fullWidth
                     {...register("link")}
