@@ -227,8 +227,7 @@ export default function AddLocation() {
                   <button
                     type="submit"
                     onClick={handleClick}
-                    className="w-60 p-2 mt-10 text-white bg-[#FF7A11] rounded-lg"
-                  >
+                    className="w-60 p-2 mt-10 text-white bg-[#FF7A11] rounded-lg">
                     Submit
                   </button>
                 </Grid>

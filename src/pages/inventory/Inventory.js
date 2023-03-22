@@ -9,25 +9,23 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { DashboardLayout } from "../../components/dashboard-layout";
+import logo from "../../assets/images/logowh.svg";
+import axios from "axios";
 import FileUpload from "react-mui-fileuploader";
-import logo from '../../assets/images/logowh.svg';
-import axios from 'axios';
-export default function AddInventory() {
 
+export default function AddInventory() {
   const { register, handleSubmit, reset } = useForm();
   const [filesToUpload, setFilesToUpload] = useState([]);
   const [locations, setLocations] = useState();
   const [selectLocation, setSelectLocation] = useState();
   const url = process.env.REACT_APP_URL;
 
-  useEffect(()=>{
-  axios.get(url + '/Location/getAll')
-  .then((function(response){
-    console.log(response.data);
-    setLocations(response.data);
-  }));
-
-  },[]);
+  useEffect(() => {
+    axios.get(url + "/Location/getAll").then(function (response) {
+      console.log(response.data);
+      setLocations(response.data);
+    });
+  }, []);
 
   function handleClick() {
     console.log("Button clicked!");
@@ -41,16 +39,29 @@ export default function AddInventory() {
   const newRequest = (data) => {
     console.log(data);
   };
+
+  const newInventory = async (data) => {
+    let formData = new FormData();
+    // filesToUpload.forEach((file) => formData.append("image", file));
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("stock", data.stock);
+    // formData.append("locationId", data.locationId);
+
+    console.log(formData);
+  };
+
   return (
     <>
       <DashboardLayout>
         <div className="px-10">
           <Card>
-            <Typography className="text-left p-5 font-3 text-lg uppercase text-[#3C2223] font-bold">
-              This is a form to add Inventory{" "}
+            <Typography variant="h4" className="text-left p-5 font-3 text-2xl  uppercase text-[#FF7A11] font-bold">
+             Add Inventory
             </Typography>
-            <form onSubmit={handleSubmit(newRequest)}>
-            <Grid container spacing={3} className="p-5">
+            <form onSubmit={handleSubmit(newInventory)}>
+              <Grid container spacing={3} className="p-5">
                 <Grid item xs={12} sm={6}>
                   <FileUpload
                     getBase64={false}
@@ -102,7 +113,6 @@ export default function AddInventory() {
                 </Grid>
               </Grid>
               <Grid container spacing={4} className="p-5">
-               
                 <Grid item xs={12} sm={6}>
                   <InputLabel>Inventory Name</InputLabel>
                   <TextField
@@ -133,7 +143,7 @@ export default function AddInventory() {
                     // label="Inventory Price"
                     type="text"
                     fullWidth
-                    {...register("price ")}
+                    {...register("price")}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -157,28 +167,23 @@ export default function AddInventory() {
                     value={selectLocation}
                     // label={"Age"}
                     // onChange={handleChange}
+                    {...register("locationId")}
                   >
-                    {
-                      locations && locations.map((items)=>(
-                        <MenuItem value={items.id}>{items.name}</MenuItem>
-                      ))
-                    }
+                    {locations &&
+                      locations.map((items) => (
+                        <MenuItem key={items.id} value={items.id}>
+                          {items.name}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </Grid>
-                {/* <Grid item lg={6} sm={12}>
-                  <InputLabel>Inventory Date</InputLabel>
-                  <TextField
-                    required
-                    name="Date"
-                    // label="Inventory Date "
-                    type="date"
-                    fullWidth
-                    {...register("date")}
-                  />
-                </Grid> */}
-               
                 <Grid item sm={12}>
-                  <button className="w-60 p-2 mt-10 text-white bg-[#FF7A11] rounded-lg" onClick={handleClick}>Submit</button>
+                  <button
+                    className="w-60 p-2 mt-10 text-white bg-[#FF7A11] rounded-lg"
+                    onClick={handleClick}
+                  >
+                    Submit
+                  </button>
                 </Grid>
               </Grid>
             </form>
