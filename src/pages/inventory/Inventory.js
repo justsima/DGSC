@@ -12,6 +12,8 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import logo from "../../assets/images/logowh.svg";
 import axios from "axios";
 import FileUpload from "react-mui-fileuploader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddInventory() {
   const { register, handleSubmit, reset } = useForm();
@@ -42,14 +44,44 @@ export default function AddInventory() {
 
   const newInventory = async (data) => {
     let formData = new FormData();
-    // filesToUpload.forEach((file) => formData.append("image", file));
+    filesToUpload.forEach((file) => formData.append("image", file));
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("price", data.price);
     formData.append("stock", data.stock);
-    // formData.append("locationId", data.locationId);
+    formData.append("locationId", data.locationId);
 
-    console.log(formData);
+    await fetch(url + "/Inventory/create", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status == true) {
+          window.location.reload();
+          toast.success("Inventory Added", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+        } else if (res.status == false) {
+          toast.error("Error", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      });
   };
 
   return (
@@ -57,8 +89,11 @@ export default function AddInventory() {
       <DashboardLayout>
         <div className="px-10">
           <Card>
-            <Typography variant="h4" className="text-left p-5 font-3 text-2xl  uppercase text-[#FF7A11] font-bold">
-             Add Inventory
+            <Typography
+              variant="h4"
+              className="text-left p-5 font-3 text-2xl  uppercase text-[#FF7A11] font-bold"
+            >
+              Add Inventory
             </Typography>
             <form onSubmit={handleSubmit(newInventory)}>
               <Grid container spacing={3} className="p-5">
@@ -189,6 +224,7 @@ export default function AddInventory() {
             </form>
           </Card>
         </div>
+        <ToastContainer />
       </DashboardLayout>
     </>
   );
