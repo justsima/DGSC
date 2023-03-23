@@ -106,7 +106,7 @@ export default function AddInventory() {
                     header="[Drag to drop]"
                     leftLabel="or"
                     rightLabel=""
-                    buttonLabel="click here"
+                    buttonLabel="click heree"
                     buttonRemoveLabel="Remove all"
                     maxFileSize={10}
                     maxUploadFiles={1}
